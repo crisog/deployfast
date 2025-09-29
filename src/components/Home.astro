@@ -2,18 +2,20 @@
 import FrameworkCard from './FrameworkCard.jsx';
 ---
 
-<div class="min-h-screen bg-background">
-  <nav class="border-b border-border">
+<div class="min-h-screen">
+  <nav class="pt-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <div class="flex items-center">
-          <div class="text-xl font-bold text-foreground">
-            DeployFast
-          </div>
+          <div class="text-xl font-bold text-light">DeployFast</div>
         </div>
         <div class="flex items-center space-x-4">
-          <a href="#" class="text-muted-foreground hover:text-foreground transition-colors">
-            GitHub
+          <a
+            href="https://github.com/crisog/deployfast"
+            class="text-gray-light hover:text-light transition-colors flex items-center space-x-2"
+          >
+            <img src="/github-mark-white.svg" alt="GitHub" class="w-5 h-5" />
+            <span>crisog/deployfast</span>
           </a>
         </div>
       </div>
@@ -22,12 +24,10 @@ import FrameworkCard from './FrameworkCard.jsx';
 
   <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
     <div class="text-center space-y-8">
-      <h1 class="text-5xl sm:text-6xl font-bold text-foreground">
-        Deploy modern web apps, fast.
+      <h1 class="text-5xl sm:text-6xl font-bold text-gray-light">
+        Deploy <span class="text-light">modern web apps</span>, fast.
       </h1>
-      <p class="text-xl text-muted-foreground max-w-2xl mx-auto">
-        Select your framework. We'll guide your deployment.
-      </p>
+      <p class="text-xl text-gray-light max-w-2xl mx-auto">Select your framework. We'll guide your deployment.</p>
     </div>
 
     <div class="mt-16 grid gap-6 md:grid-cols-2 max-w-4xl mx-auto">
