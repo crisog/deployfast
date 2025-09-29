@@ -1,5 +1,5 @@
 // @ts-check
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -20,8 +20,18 @@ export default defineConfig({
   output: 'server',
   server: {
     host: '0.0.0.0'
-},
-
+  },
+  experimental: {
+    fonts: [{
+      name: "JetBrains Mono",
+      cssVariable: "--font-jetbrains-mono",
+      provider: fontProviders.fontsource(),
+      weights: [400, 500, 600, 700],
+      styles: ["normal"],
+      subsets: ["latin"],
+      fallbacks: ["monospace"],
+    }]
+  },
   adapter: node({
     mode: 'standalone'
   }),
