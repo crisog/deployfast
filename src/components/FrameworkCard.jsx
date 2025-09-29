@@ -1,5 +1,5 @@
 
-const FrameworkCard = ({ framework, title, logo, description, buttonText }) => {
+const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, buttonText }) => {
   const selectFramework = () => {
     console.log('Telemetry: framework_chosen', { framework });
 
@@ -19,8 +19,8 @@ const FrameworkCard = ({ framework, title, logo, description, buttonText }) => {
       }}
     >
       <div className="flex items-center space-x-3 mb-6">
-        <div className="w-10 h-10 bg-foreground rounded-lg flex items-center justify-center">
-          <span className="text-background font-bold">{logo}</span>
+        <div className="w-12 h-12 flex items-center justify-center">
+          <img src={logoSrc} alt={logoAlt} className="w-10 h-10 object-contain" />
         </div>
         <h3 className="text-2xl font-semibold text-card-foreground">{title}</h3>
       </div>
