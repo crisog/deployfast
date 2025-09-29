@@ -13,7 +13,9 @@ const HostingCard = ({ hosting, framework, onSelect }: HostingCardProps) => {
   const selectHosting = () => {
     console.log('Telemetry: hosting_chosen', { framework, hosting: hosting.id });
 
-    if (onSelect) {
+    if (hosting.url) {
+      window.open(hosting.url, '_blank');
+    } else if (onSelect) {
       onSelect(hosting, framework);
     } else {
       alert(`Selected ${hosting.name} for ${framework}.\n\nNext step: Configure deployment settings`);
@@ -34,7 +36,7 @@ const HostingCard = ({ hosting, framework, onSelect }: HostingCardProps) => {
           selectHosting();
         }
       }}
-      tabIndex="0"
+      tabIndex={0}
     >
       <div>
         <div className="flex items-center space-x-4 mb-6">

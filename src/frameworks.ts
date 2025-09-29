@@ -7,6 +7,7 @@ export type HostingProvider = {
   logoSrc: string;
   buttonText: string;
   capabilities: HostingCapability[];
+  url: string;
 };
 
 export type DeploymentResource = {
@@ -36,6 +37,7 @@ export const HOSTING_PROVIDERS: Record<string, HostingProvider> = {
     logoSrc: '/vercel-icon-light.svg',
     buttonText: 'Deploy with Vercel',
     capabilities: ['static', 'serverless', 'edge'],
+    url: 'https://vercel.com/',
   },
   cloudflare: {
     id: 'cloudflare',
@@ -44,6 +46,7 @@ export const HOSTING_PROVIDERS: Record<string, HostingProvider> = {
     logoSrc: '/cloudflare-color.png',
     buttonText: 'Deploy with Cloudflare',
     capabilities: ['static', 'serverless', 'edge'],
+    url: 'https://cloudflare.com/',
   },
   railway: {
     id: 'railway',
@@ -52,6 +55,7 @@ export const HOSTING_PROVIDERS: Record<string, HostingProvider> = {
     logoSrc: '/railway-logo-light.svg',
     buttonText: 'Deploy with Railway',
     capabilities: ['fullstack', 'database', 'docker'],
+    url: 'https://railway.com/',
   },
 } as const;
 
