@@ -72,7 +72,7 @@ export const FRAMEWORK_HOSTING_MAP: Record<FrameworkId, FrameworkConfig> = {
     deploymentResources: [
       {
         id: 'dockerfile',
-        title: 'Production Dockerfile',
+        title: 'Dockerfile',
         description: 'Multi-stage Docker build optimized for Next.js with standalone output',
         type: 'dockerfile',
         filename: 'Dockerfile',
@@ -98,10 +98,9 @@ export const FRAMEWORK_HOSTING_MAP: Record<FrameworkId, FrameworkConfig> = {
     deploymentResources: [
       {
         id: 'dockerfile',
-        title: 'Production Dockerfile',
+        title: 'Dockerfile',
         description: 'Optimized Docker build for TanStack Start applications',
         type: 'dockerfile',
-        filename: 'Dockerfile',
         mdxPath: '/src/content/deployment/tanstack-dockerfile.mdx',
       },
       {

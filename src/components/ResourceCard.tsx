@@ -65,7 +65,7 @@ const ResourceCard = ({ resource, framework }: ResourceCardProps) => {
               <span className="text-xs font-mono uppercase tracking-wide px-2 py-1 rounded bg-gray-dark text-gray-light">
                 {getTypeLabel()}
               </span>
-              {resource.filename && (
+              {resource.filename && resource.type !== 'dockerfile' && (
                 <span className="text-xs font-mono text-gray-light">
                   {resource.filename}
                 </span>
