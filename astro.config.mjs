@@ -9,6 +9,8 @@ import mdx from '@astrojs/mdx';
 
 import sitemap from '@astrojs/sitemap';
 
+import react from '@astrojs/react';
+
 // https://astro.build/config
 export default defineConfig({
   site: 'https://deployfa.st',
@@ -24,5 +26,5 @@ export default defineConfig({
     mode: 'standalone'
   }),
 
-  integrations: [mdx(), sitemap()]
+  integrations: [mdx(), sitemap(), react()]
 });
