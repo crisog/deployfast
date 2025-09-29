@@ -1,12 +1,23 @@
-
 import { useState } from 'react';
+import type { HostingProvider, FrameworkId } from '../frameworks.ts';
 
-const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, buttonText }) => {
+interface HostingCardProps {
+  hosting: HostingProvider;
+  framework: FrameworkId;
+  onSelect?: (hosting: HostingProvider, framework: FrameworkId) => void;
+}
+
+const HostingCard = ({ hosting, framework, onSelect }: HostingCardProps) => {
   const [hovered, setHovered] = useState(false);
 
-  const selectFramework = () => {
-    console.log('Telemetry: framework_chosen', { framework });
-    alert(`Selected ${framework}.\n\nNext step: Route to /choose/runtime-host?framework=${framework}`);
+  const selectHosting = () => {
+    console.log('Telemetry: hosting_chosen', { framework, hosting: hosting.id });
+
+    if (onSelect) {
+      onSelect(hosting, framework);
+    } else {
+      alert(`Selected ${hosting.name} for ${framework}.\n\nNext step: Configure deployment settings`);
+    }
   };
 
   return (
@@ -16,11 +27,11 @@ const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, button
       }`}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      onClick={selectFramework}
+      onClick={selectHosting}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          selectFramework();
+          selectHosting();
         }
       }}
       tabIndex="0"
@@ -29,14 +40,14 @@ const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, button
         <div className="flex items-center space-x-4 mb-6">
           <div className="w-12 h-12 flex items-center justify-center">
             <img
-              src={logoSrc}
-              alt={logoAlt}
+              src={hosting.logoSrc}
+              alt={`${hosting.name} logo`}
               className={`w-10 h-10 object-contain transition-all duration-300 ${
                 hovered ? 'scale-110' : ''
               }`}
             />
           </div>
-          <h2 className="text-light text-[28px] font-medium">{title}</h2>
+          <h2 className="text-light text-[28px] font-medium">{hosting.name}</h2>
         </div>
 
         <p className="text-gray-light font-mono font-light leading-relaxed">
@@ -45,8 +56,21 @@ const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, button
           >
             →
           </span>{' '}
-          {description}
+          {hosting.description}
         </p>
+
+        {hosting.capabilities && (
+          <div className="mt-4 flex flex-wrap gap-2">
+            {hosting.capabilities.map((capability) => (
+              <span
+                key={capability}
+                className="text-xs font-mono uppercase tracking-wide px-2 py-1 rounded bg-gray-dark text-gray-light"
+              >
+                {capability}
+              </span>
+            ))}
+          </div>
+        )}
       </div>
 
       <div className="flex justify-start mt-8">
@@ -54,14 +78,14 @@ const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, button
           className="uppercase text-xs font-bold h-[36px] flex items-center justify-center border border-light rounded transition duration-300 ease-in-out px-4 font-mono tracking-wide text-light hover:text-black hover:bg-light cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
-            selectFramework();
+            selectHosting();
           }}
         >
-          {buttonText.replace(' →', '')} +
+          {hosting.buttonText.replace(' with ', ' ')} +
         </button>
       </div>
     </div>
   );
 };
 
-export default FrameworkCard;
+export default HostingCard;

@@ -1,0 +1,80 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import HostingCard from '../../components/HostingCard.tsx';
+import { getHostingOptionsForFramework } from '../../frameworks.ts';
+
+// Get framework from URL params
+const framework = Astro.url.searchParams.get('framework');
+
+if (!framework) {
+  return Astro.redirect('/?error=no-framework-selected');
+}
+
+let frameworkConfig;
+try {
+  frameworkConfig = getHostingOptionsForFramework(framework);
+} catch (error) {
+  return Astro.redirect('/?error=invalid-framework');
+}
+---
+
+<Layout>
+  <div class="min-h-screen">
+    <nav class="pt-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-xl font-bold text-light hover:text-gray-light transition-colors">
+              ← DeployFast
+            </a>
+            <span class="text-gray-medium">/</span>
+            <span class="text-gray-light">{frameworkConfig.name}</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="https://github.com/crisog/deployfast"
+              class="text-gray-light hover:text-light transition-colors flex items-center space-x-2"
+            >
+              <img src="/github-mark-white.svg" alt="GitHub" class="w-5 h-5" />
+              <span>crisog/deployfast</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+      <div class="text-center space-y-8 mb-16">
+        <h1 class="text-4xl sm:text-5xl font-bold text-gray-light">
+          Choose your <span class="text-light">hosting platform</span>
+        </h1>
+        <p class="text-xl text-gray-light max-w-2xl mx-auto">
+          Select where you want to deploy your {frameworkConfig.name} application.
+        </p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3 max-w-6xl mx-auto">
+        {frameworkConfig.availableHosts.map((hosting) => (
+          <HostingCard
+            client:load
+            hosting={hosting}
+            framework={frameworkConfig.framework}
+            onSelect={(hosting, framework) => {
+              // This will be handled by the component's internal logic for now
+              // Later we can add more sophisticated routing
+            }}
+          />
+        ))}
+      </div>
+
+      <div class="text-center mt-16">
+        <p class="text-gray-light font-mono text-sm">
+          Need a different hosting option?
+          <a href="https://github.com/crisog/deployfast/issues" class="text-light hover:text-blue-medium transition-colors ml-1">
+            Request it →
+          </a>
+        </p>
+      </div>
+    </div>
+  </div>
+</Layout>
