@@ -21,7 +21,7 @@ body {
   --color-gray-medium: oklch(0.38 0.02 240);
   --color-gray-dark: oklch(0.18 0.015 240);
 
-  --color-light: oklch(0.92 0.025 85);
+  --color-light: oklch(1 0 0);
 }
 
 html {
