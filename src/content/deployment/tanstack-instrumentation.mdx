@@ -1,0 +1,75 @@
+---
+title: "TanStack Start Instrumentation Setup"
+description: "Observability setup for TanStack Start with OpenTelemetry"
+framework: "tanstack-start"
+type: "guide"
+---
+
+# TanStack Start Instrumentation Guide
+
+Add comprehensive observability to your TanStack Start application.
+
+## 1. Install Dependencies
+
+```bash
+npm install @opentelemetry/api @opentelemetry/sdk-node @opentelemetry/auto-instrumentations-node
+```
+
+## 2. Create instrumentation setup
+
+Add to your app entry point or create a separate instrumentation file:
+
+```typescript
+import { NodeSDK } from '@opentelemetry/sdk-node'
+import { getNodeAutoInstrumentations } from '@opentelemetry/auto-instrumentations-node'
+
+// Only initialize in production or when explicitly enabled
+if (process.env.NODE_ENV === 'production' || process.env.ENABLE_OTEL === 'true') {
+  const sdk = new NodeSDK({
+    instrumentations: [getNodeAutoInstrumentations()],
+    serviceName: process.env.OTEL_SERVICE_NAME || 'tanstack-start-app',
+  })
+
+  sdk.start()
+}
+```
+
+## 3. Environment Variables
+
+Add these to your environment:
+
+```env
+OTEL_SERVICE_NAME=your-tanstack-app
+OTEL_EXPORTER_OTLP_ENDPOINT=https://your-observability-endpoint
+OTEL_EXPORTER_OTLP_HEADERS=authorization=Bearer your-token
+ENABLE_OTEL=true
+```
+
+## 4. Custom Tracing (Optional)
+
+For custom spans in your application:
+
+```typescript
+import { trace } from '@opentelemetry/api'
+
+const tracer = trace.getTracer('tanstack-start-app')
+
+// In your route handlers or components
+const span = tracer.startSpan('custom-operation')
+try {
+  // Your code here
+  span.setAttributes({
+    'operation.type': 'data-fetch',
+    'user.id': userId,
+  })
+} finally {
+  span.end()
+}
+```
+
+## Benefits
+
+- **Request tracing** across your TanStack Start routes
+- **Database and external API** monitoring
+- **Performance insights** for your application
+- **Error tracking** and debugging support

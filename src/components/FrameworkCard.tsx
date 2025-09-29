@@ -16,7 +16,7 @@ const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, button
 
   const selectFramework = () => {
     console.log('Telemetry: framework_chosen', { framework });
-    window.location.href = `/choose/hosting?framework=${framework}`;
+    window.location.href = `/deploy/${framework}`;
   };
 
   return (

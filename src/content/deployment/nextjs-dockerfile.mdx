@@ -1,0 +1,69 @@
+---
+title: "Next.js Production Dockerfile"
+description: "Multi-stage Docker build optimized for Next.js with standalone output"
+framework: "nextjs"
+type: "dockerfile"
+filename: "Dockerfile"
+---
+
+# Next.js Production Dockerfile
+
+This Dockerfile uses a multi-stage build process optimized for Next.js applications with standalone output.
+
+## Key Features
+
+- **Multi-stage build** for optimal image size
+- **Non-root user** for security
+- **Standalone output** for faster builds
+- **Alpine Linux** for minimal footprint
+
+```dockerfile
+# Next.js Production Dockerfile
+FROM node:18-alpine AS base
+
+# Install dependencies only when needed
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
+
+# Rebuild the source code only when needed
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+ENV NEXT_TELEMETRY_DISABLED 1
+RUN npm run build
+
+# Production image, copy all the files and run next
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV production
+ENV NEXT_TELEMETRY_DISABLED 1
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 nextjs
+
+COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+USER nextjs
+
+EXPOSE 3000
+
+ENV PORT 3000
+ENV HOSTNAME "0.0.0.0"
+
+CMD ["node", "server.js"]
+```
+
+## Important Notes
+
+- Requires `output: 'standalone'` in your `next.config.js`
+- Uses non-root user for security
+- Copies only necessary files for production

@@ -1,0 +1,61 @@
+---
+title: "TanStack Start Production Dockerfile"
+description: "Optimized Docker build for TanStack Start applications"
+framework: "tanstack-start"
+type: "dockerfile"
+filename: "Dockerfile"
+---
+
+# TanStack Start Production Dockerfile
+
+Optimized Docker setup for TanStack Start applications with security best practices.
+
+## Key Features
+
+- **Multi-stage build** for minimal production image
+- **Alpine Linux** base for security and size
+- **Non-root user** execution
+- **Optimized** for TanStack Start build output
+
+```dockerfile
+# TanStack Start Production Dockerfile
+FROM node:18-alpine AS base
+
+FROM base AS deps
+RUN apk add --no-cache libc6-compat
+WORKDIR /app
+
+COPY package.json package-lock.json ./
+RUN npm ci --only=production
+
+FROM base AS builder
+WORKDIR /app
+COPY --from=deps /app/node_modules ./node_modules
+COPY . .
+
+RUN npm run build
+
+FROM base AS runner
+WORKDIR /app
+
+ENV NODE_ENV production
+
+RUN addgroup --system --gid 1001 nodejs
+RUN adduser --system --uid 1001 tanstack
+
+COPY --from=builder --chown=tanstack:nodejs /app/dist ./dist
+COPY --from=builder --chown=tanstack:nodejs /app/package.json ./package.json
+COPY --from=deps --chown=tanstack:nodejs /app/node_modules ./node_modules
+
+USER tanstack
+
+EXPOSE 3000
+
+CMD ["npm", "start"]
+```
+
+## Important Notes
+
+- Assumes your build output goes to `./dist`
+- Uses dedicated user for security
+- Only includes production dependencies in final image

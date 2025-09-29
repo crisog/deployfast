@@ -9,12 +9,23 @@ export type HostingProvider = {
   capabilities: HostingCapability[];
 };
 
+export type DeploymentResource = {
+  id: string;
+  title: string;
+  description: string;
+  type: 'dockerfile' | 'guide' | 'config';
+  mdxPath: string;
+  filename?: string;
+};
+
 export type FrameworkId = 'nextjs' | 'tanstack-start'
 
 export type FrameworkConfig = {
   framework: FrameworkId;
   name: string;
+  description: string;
   availableHosts: HostingProvider[];
+  deploymentResources: DeploymentResource[];
 };
 
 export const HOSTING_PROVIDERS: Record<string, HostingProvider> = {
@@ -48,18 +59,54 @@ export const FRAMEWORK_HOSTING_MAP: Record<FrameworkId, FrameworkConfig> = {
   nextjs: {
     framework: 'nextjs',
     name: 'Next.js',
+    description: 'Production-ready deployment setup for Next.js applications',
     availableHosts: [
       HOSTING_PROVIDERS.vercel,
-      HOSTING_PROVIDERS.cloudflare,
       HOSTING_PROVIDERS.railway,
+      HOSTING_PROVIDERS.cloudflare,
+    ],
+    deploymentResources: [
+      {
+        id: 'dockerfile',
+        title: 'Production Dockerfile',
+        description: 'Multi-stage Docker build optimized for Next.js with standalone output',
+        type: 'dockerfile',
+        filename: 'Dockerfile',
+        mdxPath: '/src/content/deployment/nextjs-dockerfile.mdx',
+      },
+      {
+        id: 'instrumentation',
+        title: 'Instrumentation Setup',
+        description: 'Complete observability with OpenTelemetry for Next.js',
+        type: 'guide',
+        mdxPath: '/src/content/deployment/nextjs-instrumentation.mdx',
+      }
     ],
   },
   'tanstack-start': {
     framework: 'tanstack-start',
     name: 'TanStack Start',
+    description: 'Production-ready deployment setup for TanStack Start applications',
     availableHosts: [
-      HOSTING_PROVIDERS.cloudflare,
       HOSTING_PROVIDERS.railway,
+      HOSTING_PROVIDERS.cloudflare,
+    ],
+    deploymentResources: [
+      {
+        id: 'dockerfile',
+        title: 'Production Dockerfile',
+        description: 'Optimized Docker build for TanStack Start applications',
+        type: 'dockerfile',
+        filename: 'Dockerfile',
+        mdxPath: '/src/content/deployment/tanstack-dockerfile.mdx',
+      },
+      {
+        id: 'instrumentation',
+        title: 'Instrumentation Setup',
+        description: 'Observability setup for TanStack Start with OpenTelemetry',
+        type: 'guide',
+        mdxPath: '/src/content/deployment/tanstack-instrumentation.mdx',
+      }
     ],
   },
 } as const;

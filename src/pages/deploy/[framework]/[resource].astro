@@ -1,0 +1,141 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import { getHostingOptionsForFramework } from '../../../frameworks.ts';
+import { getCollection } from 'astro:content';
+
+// Get params from URL
+const { framework, resource: resourceId } = Astro.params;
+
+if (!framework || !resourceId) {
+  return Astro.redirect('/?error=missing-params');
+}
+
+let frameworkConfig;
+let deploymentResource;
+let mdxEntry;
+let Content = null;
+
+try {
+  frameworkConfig = getHostingOptionsForFramework(framework);
+  deploymentResource = frameworkConfig.deploymentResources.find(r => r.id === resourceId);
+
+  if (!deploymentResource) {
+    return Astro.redirect(`/deploy/${framework}?error=resource-not-found`);
+  }
+
+  // Load MDX content
+  const allDeploymentContent = await getCollection('deployment');
+  const mdxSlug = `${framework}-${resourceId}`;
+  mdxEntry = allDeploymentContent.find((entry: any) => entry.slug === mdxSlug);
+
+  if (mdxEntry) {
+    const rendered = await mdxEntry.render();
+    Content = rendered.Content;
+  } else {
+    console.warn(`MDX content not found for ${mdxSlug}`);
+  }
+} catch (error) {
+  console.error('Error loading content:', error);
+  return Astro.redirect('/?error=invalid-framework');
+}
+---
+
+<Layout>
+  <div class="min-h-screen">
+    <nav class="pt-6">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center space-x-4">
+            <a href="/" class="text-xl font-bold text-light hover:text-gray-light transition-colors">
+              DeployFast
+            </a>
+            <span class="text-gray-medium">/</span>
+            <a href={`/deploy/${framework}`} class="text-gray-light hover:text-light transition-colors">
+              {frameworkConfig.name}
+            </a>
+            <span class="text-gray-medium">/</span>
+            <span class="text-light">{deploymentResource.title}</span>
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="https://github.com/crisog/deployfast"
+              class="text-gray-light hover:text-light transition-colors flex items-center space-x-2"
+            >
+              <img src="/github-mark-white.svg" alt="GitHub" class="w-5 h-5" />
+              <span>crisog/deployfast</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
+      <div class="mb-8">
+        <div class="flex items-center space-x-3 mb-4">
+          <span class="text-3xl">
+            {deploymentResource.type === 'dockerfile' ? '🐳' : deploymentResource.type === 'guide' ? '📖' : '⚙️'}
+          </span>
+          <h1 class="text-3xl sm:text-4xl font-bold text-light">
+            {deploymentResource.title}
+          </h1>
+        </div>
+        <p class="text-xl text-gray-light">
+          {deploymentResource.description}
+        </p>
+        {deploymentResource.filename && (
+          <div class="mt-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-md bg-gray-dark text-gray-light font-mono text-sm">
+              📄 {deploymentResource.filename}
+            </span>
+          </div>
+        )}
+      </div>
+
+      <div class="bg-gray-dark rounded-lg border border-gray-medium overflow-hidden">
+        <div class="flex items-center justify-between p-6 border-b border-gray-medium">
+          <h2 class="text-xl font-bold text-light">Resource Content</h2>
+          <button
+            class="px-4 py-2 bg-light text-black rounded font-mono text-sm hover:bg-gray-light transition-colors"
+            onclick="copyToClipboard()"
+          >
+            Copy to Clipboard
+          </button>
+        </div>
+
+        <div class="p-6">
+          {Content ? (
+            <div class="prose prose-invert max-w-none">
+              <Content />
+            </div>
+          ) : (
+            <div class="prose prose-invert max-w-none">
+              <p class="text-gray-light font-mono">
+                📄 MDX content not found for: <code class="text-blue-medium">{framework}-{resourceId}</code>
+              </p>
+              <p class="text-gray-light font-mono mt-4">
+                Expected content path: <code class="text-blue-medium">{deploymentResource.mdxPath}</code>
+              </p>
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div class="mt-12 text-center">
+        <a
+          href={`/deploy/${framework}`}
+          class="inline-flex items-center px-6 py-3 border border-light text-light hover:text-black hover:bg-light transition-colors rounded font-mono tracking-wide"
+        >
+          ← Back to {frameworkConfig.name} Resources
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function copyToClipboard() {
+      // This will be enhanced when we have actual MDX content
+      navigator.clipboard.writeText('MDX content will be copied here');
+      alert('Content copied to clipboard!');
+    }
+  </script>
+</Layout>
