@@ -103,7 +103,7 @@ try {
             id="copyButton"
             class="px-4 py-2 bg-gray-dark border border-gray-medium text-light rounded font-mono text-xs sm:text-sm hover:bg-gray-medium hover:border-light transition-colors whitespace-nowrap cursor-pointer"
           >
-            Copy to Clipboard
+            Copy Markdown
           </button>
         </div>
 
@@ -146,7 +146,7 @@ try {
         if (!rawMarkdown || rawMarkdown.length === 0) {
           button.textContent = '✗ No content';
           setTimeout(() => {
-            button.textContent = 'Copy to Clipboard';
+            button.textContent = 'Copy Markdown';
           }, 2000);
           return;
         }
@@ -166,7 +166,7 @@ try {
           console.error('Failed to copy:', err);
           button.textContent = '✗ Failed';
           setTimeout(() => {
-            button.textContent = 'Copy to Clipboard';
+            button.textContent = 'Copy Markdown';
           }, 2000);
         });
       });
