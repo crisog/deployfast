@@ -22,41 +22,41 @@ try {
   <div class="min-h-screen">
     <nav class="pt-6">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex items-center space-x-4">
-            <a href="/" class="text-xl font-bold text-light hover:text-gray-light transition-colors">
+        <div class="flex justify-between items-center min-h-16 py-2">
+          <div class="flex items-center space-x-2 sm:space-x-4 text-sm sm:text-base">
+            <a href="/" class="text-lg sm:text-xl font-bold text-light hover:text-gray-light transition-colors">
               ← DeployFast
             </a>
             <span class="text-gray-medium">/</span>
             <span class="text-gray-light">{frameworkConfig.name}</span>
           </div>
-          <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
             <a
               href="https://github.com/crisog/deployfast"
               class="text-gray-light hover:text-light transition-colors flex items-center space-x-2"
             >
               <img src="/github-mark-white.svg" alt="GitHub" class="w-5 h-5" />
-              <span>crisog/deployfast</span>
+              <span class="hidden md:inline">crisog/deployfast</span>
             </a>
           </div>
         </div>
       </div>
     </nav>
 
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
-      <div class="text-center space-y-8 mb-16">
-        <h1 class="text-4xl sm:text-5xl font-bold text-gray-light">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 lg:pt-20 pb-12 sm:pb-16">
+      <div class="text-center space-y-4 sm:space-y-6 lg:space-y-8 mb-12 sm:mb-16">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-light px-4">
           Deploy your <span class="text-light">{frameworkConfig.name}</span> app
         </h1>
-        <p class="text-xl text-gray-light max-w-2xl mx-auto">
+        <p class="text-base sm:text-lg lg:text-xl text-gray-light max-w-2xl mx-auto px-4">
           {frameworkConfig.description}
         </p>
       </div>
 
-      <div class="space-y-12">
+      <div class="space-y-10 sm:space-y-12">
         <section>
-          <h2 class="text-2xl font-bold text-light mb-6">Deployment Resources</h2>
-          <div class="grid gap-6 md:grid-cols-2 max-w-4xl">
+          <h2 class="text-xl sm:text-2xl font-bold text-light mb-4 sm:mb-6">Deployment Resources</h2>
+          <div class="grid gap-4 sm:gap-6 md:grid-cols-2 max-w-4xl">
             {frameworkConfig.deploymentResources.map((resource) => (
               <ResourceCard
                 client:load
@@ -68,26 +68,26 @@ try {
         </section>
 
         <section>
-          <h2 class="text-2xl font-bold text-light mb-6">Hosting Options</h2>
-          <p class="text-gray-light mb-6 font-mono">
+          <h2 class="text-xl sm:text-2xl font-bold text-light mb-4 sm:mb-6">Hosting Options</h2>
+          <p class="text-gray-light mb-4 sm:mb-6 font-mono text-sm sm:text-base">
             Once you have your Dockerfile and instrumentation set up, deploy to any of these platforms:
           </p>
-          <div class="grid gap-4 md:grid-cols-3">
+          <div class="grid gap-3 sm:gap-4 md:grid-cols-2 lg:grid-cols-3">
             {frameworkConfig.availableHosts.map((hosting) => (
               <a
                 href={hosting.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="border border-gray-dark rounded-md p-4 hover:border-gray-medium transition-colors cursor-pointer block"
+                class="border border-gray-dark rounded-md p-3 sm:p-4 hover:border-gray-medium transition-colors cursor-pointer block"
               >
-                <div class="flex items-center space-x-3 mb-3">
-                  <img src={hosting.logoSrc} alt={`${hosting.name} logo`} class="w-8 h-8 object-contain" />
-                  <h3 class="text-light font-medium">{hosting.name}</h3>
+                <div class="flex items-center space-x-2 sm:space-x-3 mb-2 sm:mb-3">
+                  <img src={hosting.logoSrc} alt={`${hosting.name} logo`} class="w-6 h-6 sm:w-8 sm:h-8 object-contain flex-shrink-0" />
+                  <h3 class="text-light font-medium text-sm sm:text-base">{hosting.name}</h3>
                 </div>
-                <p class="text-gray-light text-sm font-mono">{hosting.description}</p>
-                <div class="mt-3 flex flex-wrap gap-1">
+                <p class="text-gray-light text-xs sm:text-sm font-mono leading-relaxed">{hosting.description}</p>
+                <div class="mt-2 sm:mt-3 flex flex-wrap gap-1">
                   {hosting.capabilities.map((capability) => (
-                    <span class="text-xs font-mono uppercase tracking-wide px-2 py-1 rounded bg-gray-dark text-gray-light">
+                    <span class="text-[10px] sm:text-xs font-mono uppercase tracking-wide px-1.5 sm:px-2 py-0.5 sm:py-1 rounded bg-gray-dark text-gray-light">
                       {capability}
                     </span>
                   ))}
@@ -98,8 +98,8 @@ try {
         </section>
       </div>
 
-      <div class="text-center mt-16">
-        <p class="text-gray-light font-mono text-sm">
+      <div class="text-center mt-12 sm:mt-16">
+        <p class="text-gray-light font-mono text-xs sm:text-sm px-4">
           Need help with deployment?
           <a href="https://github.com/crisog/deployfast/issues" class="text-light hover:text-blue-medium transition-colors ml-1">
             Ask a question →
