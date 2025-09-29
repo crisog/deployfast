@@ -51,7 +51,7 @@ const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, button
 
       <div className="flex justify-start mt-8">
         <button
-          className="uppercase text-xs font-bold h-[36px] flex items-center justify-center border border-light rounded transition duration-300 ease-in-out px-4 font-mono tracking-wide text-light hover:text-black hover:bg-light"
+          className="uppercase text-xs font-bold h-[36px] flex items-center justify-center border border-light rounded transition duration-300 ease-in-out px-4 font-mono tracking-wide text-light hover:text-black hover:bg-light cursor-pointer"
           onClick={(e) => {
             e.stopPropagation();
             selectFramework();
