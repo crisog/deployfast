@@ -44,47 +44,47 @@ try {
   <div class="min-h-screen">
     <nav class="pt-6">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between items-center h-16">
-          <div class="flex items-center space-x-4">
-            <a href="/" class="text-xl font-bold text-light hover:text-gray-light transition-colors">
+        <div class="flex justify-between items-center min-h-16 py-2">
+          <div class="flex items-center space-x-2 sm:space-x-4 flex-wrap text-sm sm:text-base">
+            <a href="/" class="text-lg sm:text-xl font-bold text-light hover:text-gray-light transition-colors">
               DeployFast
             </a>
-            <span class="text-gray-medium">/</span>
-            <a href={`/deploy/${framework}`} class="text-gray-light hover:text-light transition-colors">
+            <span class="text-gray-medium hidden sm:inline">/</span>
+            <a href={`/deploy/${framework}`} class="text-gray-light hover:text-light transition-colors truncate max-w-[100px] sm:max-w-none">
               {frameworkConfig.name}
             </a>
-            <span class="text-gray-medium">/</span>
-            <span class="text-light">{deploymentResource.title}</span>
+            <span class="text-gray-medium hidden sm:inline">/</span>
+            <span class="text-light truncate max-w-[120px] sm:max-w-none">{deploymentResource.title}</span>
           </div>
-          <div class="flex items-center space-x-4">
+          <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
             <a
               href="https://github.com/crisog/deployfast"
               class="text-gray-light hover:text-light transition-colors flex items-center space-x-2"
             >
               <img src="/github-mark-white.svg" alt="GitHub" class="w-5 h-5" />
-              <span>crisog/deployfast</span>
+              <span class="hidden md:inline">crisog/deployfast</span>
             </a>
           </div>
         </div>
       </div>
     </nav>
 
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-16">
-      <div class="mb-8">
-        <div class="flex items-center space-x-3 mb-4">
-          <span class="text-3xl">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 sm:pt-12 pb-12 sm:pb-16">
+      <div class="mb-6 sm:mb-8">
+        <div class="flex items-center space-x-2 sm:space-x-3 mb-3 sm:mb-4">
+          <span class="text-2xl sm:text-3xl flex-shrink-0">
             {deploymentResource.type === 'dockerfile' ? '🐳' : deploymentResource.type === 'guide' ? '📖' : '⚙️'}
           </span>
-          <h1 class="text-3xl sm:text-4xl font-bold text-light">
+          <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-light break-words">
             {deploymentResource.title}
           </h1>
         </div>
-        <p class="text-xl text-gray-light">
+        <p class="text-base sm:text-lg lg:text-xl text-gray-light">
           {deploymentResource.description}
         </p>
         {deploymentResource.filename && (
-          <div class="mt-4">
-            <span class="inline-flex items-center px-3 py-1 rounded-md bg-gray-dark text-gray-light font-mono text-sm">
+          <div class="mt-3 sm:mt-4">
+            <span class="inline-flex items-center px-3 py-1 rounded-md bg-gray-dark text-gray-light font-mono text-xs sm:text-sm break-all">
               📄 {deploymentResource.filename}
             </span>
           </div>
@@ -92,17 +92,17 @@ try {
       </div>
 
       <div class="rounded-lg border border-gray-medium overflow-hidden">
-        <div class="flex items-center justify-between p-6 border-b border-gray-medium">
-          <h2 class="text-xl font-bold text-light">Resource Content</h2>
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4 p-4 sm:p-6 border-b border-gray-medium">
+          <h2 class="text-lg sm:text-xl font-bold text-light">Resource Content</h2>
           <button
-            class="px-4 py-2 bg-light text-black rounded font-mono text-sm hover:bg-gray-light transition-colors"
+            class="px-4 py-2 bg-light text-black rounded font-mono text-xs sm:text-sm hover:bg-gray-light transition-colors whitespace-nowrap"
             onclick="copyToClipboard()"
           >
             Copy to Clipboard
           </button>
         </div>
 
-        <div class="p-6">
+        <div class="p-4 sm:p-6">
           {Content ? (
             <div class="prose prose-invert max-w-none">
               <Content />
@@ -120,10 +120,10 @@ try {
         </div>
       </div>
 
-      <div class="mt-12 text-center">
+      <div class="mt-8 sm:mt-12 text-center">
         <a
           href={`/deploy/${framework}`}
-          class="inline-flex items-center px-6 py-3 border border-light text-light hover:text-black hover:bg-light transition-colors rounded font-mono tracking-wide"
+          class="inline-flex items-center px-4 sm:px-6 py-2 sm:py-3 border border-light text-light hover:text-black hover:bg-light transition-colors rounded font-mono text-sm sm:text-base tracking-wide"
         >
           ← Back to {frameworkConfig.name} Resources
         </a>
