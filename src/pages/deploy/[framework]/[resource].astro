@@ -56,7 +56,10 @@ try {
               {frameworkConfig.name}
             </a>
             <span class="text-gray-medium hidden sm:inline">/</span>
-            <span class="text-light truncate max-w-[120px] sm:max-w-none">{deploymentResource.title}</span>
+            <span class="text-light truncate max-w-[120px] sm:max-w-none">
+              <span class="sm:hidden">{deploymentResource.type === 'dockerfile' ? 'Dockerfile' : deploymentResource.type === 'guide' ? 'Guide' : deploymentResource.title}</span>
+              <span class="hidden sm:inline">{deploymentResource.title}</span>
+            </span>
           </div>
           <div class="flex items-center space-x-2 sm:space-x-4 flex-shrink-0">
             <a
