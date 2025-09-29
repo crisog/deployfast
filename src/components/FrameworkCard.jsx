@@ -1,4 +1,6 @@
 
+import { Button } from './ui/button';
+
 const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, buttonText }) => {
   const selectFramework = () => {
     console.log('Telemetry: framework_chosen', { framework });
@@ -29,9 +31,9 @@ const FrameworkCard = ({ framework, title, logoSrc, logoAlt, description, button
         {description}
       </p>
 
-      <button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 px-6 py-3 rounded-lg font-medium transition-colors group-hover:bg-primary/90">
+      <Button className="w-full" size="lg">
         {buttonText}
-      </button>
+      </Button>
     </div>
   );
 };
