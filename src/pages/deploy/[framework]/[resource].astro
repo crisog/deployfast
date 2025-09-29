@@ -51,11 +51,11 @@ try {
             <a href="/" class="text-lg sm:text-xl font-bold text-light hover:text-gray-light transition-colors">
               DeployFast
             </a>
-            <span class="text-gray-medium hidden sm:inline">/</span>
+            <span class="text-gray-medium">/</span>
             <a href={`/deploy/${framework}`} class="text-gray-light hover:text-light transition-colors truncate max-w-[100px] sm:max-w-none">
               {frameworkConfig.name}
             </a>
-            <span class="text-gray-medium hidden sm:inline">/</span>
+            <span class="text-gray-medium">/</span>
             <span class="text-light truncate max-w-[120px] sm:max-w-none">
               <span class="sm:hidden">{deploymentResource.type === 'dockerfile' ? 'Dockerfile' : deploymentResource.type === 'guide' ? 'Guide' : deploymentResource.title}</span>
               <span class="hidden sm:inline">{deploymentResource.title}</span>
